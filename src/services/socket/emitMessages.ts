@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io';
 import { Server } from 'socket.io';
-import { sendMessage } from '../../controller/ChatController';
+import { sendMessage } from '../../controller/chatController';
 import generatePromt from '../../services/openai';
 
 export default async function emitMessage(socket: Socket, io: Server): Promise<void> {

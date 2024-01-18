@@ -5,12 +5,13 @@ import { db } from '../../config/conexionDB'
 const adapter = new PrismaLibSQL(db)
 const messageClient = new PrismaClient({ adapter }).messages
 
-export async function createMessage(msg: string, reponse: string): Promise<object> {
+export async function createMessage(msg: string, reponse: string,userId:string): Promise<object> {
   try {
     const newMessage = await messageClient.create({
       data: {
         content: msg,
-        response: reponse
+        response: reponse,
+        userId:userId,
       }
     })
     console.log(newMessage)

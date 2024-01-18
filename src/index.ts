@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import { Server } from "socket.io";
 import { createServer } from 'node:http'
 import emitMessage from './services/socket/emitMessages';
+import routes from './routes'
 
 import morgan from 'morgan'
 import recoveryMessages from './services/socket/recoveryMessages';
@@ -13,8 +14,12 @@ const port = process.env.PORT ?? 3200
 
 const app = express()
 
-// app.use(cors())
+app.use(cors())
 app.use(morgan('dev'))
+// manejo de datos en el body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/api',routes)
 
 const server = createServer(app)
 
@@ -30,6 +35,7 @@ io.on('connection',async(socket)=>{
     socket.on('disconnect',()=>{
         console.log('a user has disconnected!')
     })
+
 
     // cuando el usuario envie un mensaje
     try {
