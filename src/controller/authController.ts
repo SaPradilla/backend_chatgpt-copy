@@ -14,7 +14,6 @@ interface UserData {
 export async function registerUser (req: Request, res: Response) {
 
     const {name,email,password}: UserData = req.body
-    // console.log(req.body)
     try {
         const hashedPassword = await cryptPwd(password)
 
@@ -48,6 +47,7 @@ export async function loginUser (req: Request, res: Response){
         
         return res.status(200).header(`Authorization`,`Bearer ${token}`).json({
             msg:'successful login',
+            user:userFind.name,
             token
         })  
 

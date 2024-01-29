@@ -1,17 +1,25 @@
 // username:string
-import { createMessage} from '../repositories/message.repository'
+import { createMessage, findMessages} from '../repositories/message.repository'
 
-export async function sendMessage (msg: string, response: string) : Promise<void>{
+export async function sendMessage (msg: string, response: string,userId:string) : Promise<void>{
 
     try {
-        // TODO -> colocar el nombre del usuario que envio el mensaje 
-        // Crear mensaje 
 
-        // const messageSend = await createMessage(msg,response)
+        // Crear mensaje 
+        // console.log(msg)
+        const messageSend = await createMessage(msg,response,userId)
         
 
     } catch (error) {
         console.log('error',error)
         return
+    }
+}
+export async function findRecoveryMessages (userId:string){
+    try {
+        const messages = await findMessages(userId)
+        return messages
+    } catch (error) {
+        console.log('error',error)
     }
 }

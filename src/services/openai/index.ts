@@ -1,6 +1,7 @@
 // import { ChatCompletionMessageParam } from "openai/resources";
 import OpenAI from "openai";
 import dotenv from 'dotenv'
+import { ChatCompletionMessageParam } from "openai/resources";
 dotenv.config()
 
 
@@ -8,14 +9,14 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-export default async function generatePromt(message:string): Promise<Object> {
-  try {
 
+export default async function generatePromt(chat): Promise<Object> {
+  try {
+    // ejemplo de historial
+   
     const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
-        messages: [
-          { role: 'user', content: message },
-        ],
+        messages:chat,
         max_tokens: 150  
     //     temperature: 1,
     // max_tokens: 800,
@@ -24,7 +25,7 @@ export default async function generatePromt(message:string): Promise<Object> {
     // presence_penalty: 0,
     });
 
-    console.log(completion.choices[0].message);
+    // console.log(completion.choices[0].message);
 
     const reponseApi = completion.choices[0].message
     return reponseApi

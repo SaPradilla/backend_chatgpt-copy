@@ -35,13 +35,12 @@ io.on('connection',async(socket)=>{
     socket.on('disconnect',()=>{
         console.log('a user has disconnected!')
     })
-
-
     // cuando el usuario envie un mensaje
     try {
         // funcion que escucha los eventos y emite el mensaje 
         await emitMessage(socket,io)
-        await recoveryMessages(socket)
+
+        await recoveryMessages(socket,io)        
 
     } catch (error) {
         console.log('error when issuing message', error)

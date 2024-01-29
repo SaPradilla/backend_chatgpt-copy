@@ -8,13 +8,15 @@ const messageClient = new PrismaClient({ adapter }).messages
 export async function createMessage(msg: string, reponse: string,userId:string): Promise<object> {
   try {
     const newMessage = await messageClient.create({
-      data: {
+      data: { 
         content: msg,
         response: reponse,
-        userId:userId,
+        user:{
+          connect:{id:userId}
+        }
       }
     })
-    console.log(newMessage)
+    // console.log(newMessage)
     return newMessage
 
   } catch (error) {
@@ -22,11 +24,14 @@ export async function createMessage(msg: string, reponse: string,userId:string):
   }
 }
 
-export async function findMessages() {
+export async function findMessages(userId:string) {
   try {
 
-    const messages = await messageClient.findMany()
-    console.log(messages)
+    const messages = await messageClient.findMany({
+      where:{
+        userId:userId
+      }
+    })
     
     return messages
 

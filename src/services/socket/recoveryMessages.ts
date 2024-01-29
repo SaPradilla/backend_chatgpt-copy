@@ -1,17 +1,21 @@
-import { findMessages } from '../../repositories/message.repository';
-import { Socket } from 'socket.io';
+// import { findMessages } from '../../repositories/message.repository';
+import { Socket,Server } from 'socket.io';
+import {findRecoveryMessages} from '../../controller/chatController'
 
 
-export default async function recoveryMessages(socket: Socket){
+export default async function recoveryMessages(socket: Socket,io: Server){
 
-    if(!socket.recovered){
-        
+    socket.on('recovery messages',async(userId:string)=>{
+
         try {
-            const messages = await findMessages()
+            const messages = await findRecoveryMessages(userId)
             socket.emit('recovery message',messages)
-
+    
         } catch (error) {
             console.log(error)
         }
-    }
+    })
+
+
+ 
 }
